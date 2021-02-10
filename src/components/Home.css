@@ -1,0 +1,12 @@
+.banner__search {
+  display: flex;
+  flex-direction: column;
+}
+
+.banner__searchButton {
+  width: 100%;
+  color: #ff7770;
+  background-color: white;
+  font-weight: 900 !important;
+  text-transform: inherit !important;
+}

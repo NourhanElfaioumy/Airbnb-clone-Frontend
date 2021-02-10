@@ -1,0 +1,46 @@
+h3 {
+  text-align: center;
+}
+img {
+  border-radius: 8px;
+  margin: auto;
+  transition: transform 100ms ease-in;
+}
+img:hover {
+  opacity: 0.5;
+  cursor: pointer;
+  transform: scale(1.07);
+}
+.col-4 img {
+  width: 100%;
+}
+.col-3 img {
+  width: 100%;
+}
+a {
+  color: black !important;
+}
+a:hover {
+  text-decoration: none;
+}
+.second-card {
+  background-color: black;
+  width: 100%;
+  color: white;
+}
+
+h4:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+.fimg,
+.simg,
+.timg,
+.foimg {
+}
+.fimg:hover,
+.simg:hover,
+.timg:hover,
+.foimg:hover {
+  /* margin-bottom: 100px; */
+}
