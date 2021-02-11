@@ -1,37 +1,52 @@
 import React from "react";
 // import "./App.scss";
+import { applyMiddleware, createStore } from "redux";
+import { Provider } from "react-redux";
+import promiseMW from "redux-promise";
 import Header from './components/Header';
 import Home from './components/Home';
 import Footer from './components/Footer'
 import SearchPage from './components/SearchPage'
 import { BrowserRouter as Router, Switch,Route } from "react-router-dom";
-// import { Login, Register } from "./components/Auth/index";
-import Index from './components/Auth/Index'
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
+const createStoreWithMW = applyMiddleware(promiseMW)(createStore);
 export default class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+        data_type:''
+    }
 
- constructor(){
-   super();
-  }
+    this.username_Callback=this.username_Callback.bind(this)
 
+
+
+}
+
+username_Callback(usernamecallback){
+this.setState({data_type:usernamecallback});
+
+}
   render = () =>{
    return(
       <div className="app">
       <Router>
-        <Header />
+        <Header dataFromParent = {this.state.data_type}/>
         <Switch>
           <Route path="/search" component={SearchPage}/>
           <Route exact path="/" component={Home}/>
-          <Route path="/login" component={Login}/>
+          <Route path="/user" component={Home}/>
+          <Route path="/host" component={Home}/>
+          <Route path="/login" render={props=><Login {...props} callbackFromParents= {this.username_Callback}/>}/>
           <Route path="/signup" component={Register}/>
-
         </Switch>
         <Footer />
       </ Router>
     </div>
     )
   }
+}
   // constructor(props) {
   //   super(props);
   //   this.state = {
@@ -82,8 +97,6 @@ export default class App extends React.Component {
   //     </div>
   //   );
   // }
-}
-
 // const RightSide = props => {
 //   return (
 //     <div
