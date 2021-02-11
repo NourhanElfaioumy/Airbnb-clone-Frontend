@@ -65,7 +65,7 @@ export default class Login extends React.Component {
                 placeholder="email"
                 value={this.state.email}
                 onChange={this.handleChange}
-              />
+              required/>
             </div>
             <div className="form-group">
               <label htmlFor="password">Password</label>
@@ -75,7 +75,7 @@ export default class Login extends React.Component {
                 placeholder="password"
                 value={this.state.password}
                 onChange={this.handleChange}
-              />
+              required/>
             </div>
           </div>
         </div>

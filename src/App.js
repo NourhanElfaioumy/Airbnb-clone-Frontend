@@ -43,7 +43,7 @@ token_Callback(token){
           <Route path="/user" component={Home}/>
           <Route path="/host" component={Home}/>
           <Route path="/login" render={props=><Login {...props} callbackFromParents= {this.username_Callback} callbackFromParentsfortoken= {this.token_Callback}/>}/>
-          <Route path="/signup" component={Register}/>
+          <Route path="/signup" render={props=><Register {...props} callbackFromParents= {this.username_Callback} callbackFromParentsfortoken= {this.token_Callback}/>}/>
         </Switch>
         <Footer />
       </ Router>

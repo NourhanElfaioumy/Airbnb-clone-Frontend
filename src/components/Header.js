@@ -11,6 +11,9 @@ import { Avatar } from "@material-ui/core";
 import { Link } from "react-router-dom";
 const Header = ({ dataFromParent,token}) => {
   const location = useLocation();
+  const handleHostProfile=()=>{
+      
+  }
   if (Cookies.get('token') && location.pathname ==='/host') {
     return (
       <div className="header">
@@ -37,7 +40,12 @@ const Header = ({ dataFromParent,token}) => {
                 <Link to={"/host/hosthome"}>Host a Home</Link>
               </Dropdown.Item>
               <Dropdown.Item>
-                <Link to={"/logout"}>Logout</Link>
+                <Link to={"/logout"} onClick={()=>{
+                    localStorage.removeItem('token')
+                    sessionStorage.removeItem('token')
+                    Cookies.remove('token')
+                    window.location.replace('/')
+                }}>Logout</Link>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
@@ -70,7 +78,12 @@ const Header = ({ dataFromParent,token}) => {
                 <Link to={"/user/trips"}>Trips</Link>
               </Dropdown.Item>
               <Dropdown.Item>
-                <Link to={"/logout"}>Logout</Link>
+                <Link to={"/logout"} onClick={()=>{
+                    localStorage.removeItem('token')
+                    sessionStorage.removeItem('token')
+                    Cookies.remove('token')
+                    window.location.replace('/');
+                }}>Logout</Link>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
