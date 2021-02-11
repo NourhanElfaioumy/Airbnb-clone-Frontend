@@ -1,15 +1,17 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React from "react";
 import "./Header.css";
-import LanguageIcon from "@material-ui/icons/Language";
-import MenuIcon from "@material-ui/icons/Menu";
+import Cookies from 'js-cookie';
+import { useLocation } from 'react-router-dom'
+// import LanguageIcon from "@material-ui/icons/Language";
+// import MenuIcon from "@material-ui/icons/Menu";
 import Dropdown from "react-bootstrap/Dropdown";
 import "react-dropdown/style.css";
 import { Avatar } from "@material-ui/core";
 import { Link } from "react-router-dom";
-const Header = ({ dataFromParent }) => {
-  console.log(dataFromParent);
-  if (dataFromParent === true) {
+const Header = ({ dataFromParent,token}) => {
+  const location = useLocation();
+  if (Cookies.get('token') && location.pathname ==='/host') {
     return (
       <div className="header">
         <Link to="/">
@@ -42,7 +44,7 @@ const Header = ({ dataFromParent }) => {
         </div>
       </div>
     );
-  } else if (dataFromParent === false) {
+  } else if (Cookies.get('token') && location.pathname === "/user") {
     return (
       <div className="header">
         <Link to="/">

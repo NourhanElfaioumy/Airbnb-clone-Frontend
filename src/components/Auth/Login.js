@@ -13,9 +13,6 @@ export default class Login extends React.Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  sendData = (body) => {
-    this.props.parentCallback(body);
-  };
   handleChange(evt) {
     this.setState({ [evt.target.name]: evt.target.value });
   }
@@ -23,7 +20,7 @@ export default class Login extends React.Component {
     var email = this.state.email;
     var password = this.state.password;
     ev.preventDefault();
-    const data = { email: email, password: password };
+    // const data = { email: email, password: password };
     await fetch("http://localhost:9000/login", {
       method: "POST",
       body: JSON.stringify({
@@ -40,7 +37,9 @@ export default class Login extends React.Component {
         } else {
           localStorage.setItem("token", body.token);
           Cookie.set("token", body.token);
+          sessionStorage.setItem("token",body.token);
           this.props.callbackFromParents(body.userinfo.type)
+          this.props.callbackFromParentsfortoken(body.token)
           if (body.userinfo.type === false) {
             this.props.history.push("/user");
           } else {

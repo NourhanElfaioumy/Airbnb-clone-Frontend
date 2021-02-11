@@ -15,12 +15,12 @@ export default class App extends React.Component {
   constructor(props){
     super(props);
     this.state={
-        data_type:''
+        data_type:'',
+        token:""
     }
 
     this.username_Callback=this.username_Callback.bind(this)
-
-
+    this.token_Callback=this.token_Callback.bind(this)
 
 }
 
@@ -28,17 +28,21 @@ username_Callback(usernamecallback){
 this.setState({data_type:usernamecallback});
 
 }
+token_Callback(token){
+  this.setState({token:token});
+  
+  }
   render = () =>{
    return(
       <div className="app">
       <Router>
-        <Header dataFromParent = {this.state.data_type}/>
+        <Header dataFromParent = {this.state.data_type} token ={this.state.token} location ={this.props.location}/>
         <Switch>
           <Route path="/search" component={SearchPage}/>
           <Route exact path="/" component={Home}/>
           <Route path="/user" component={Home}/>
           <Route path="/host" component={Home}/>
-          <Route path="/login" render={props=><Login {...props} callbackFromParents= {this.username_Callback}/>}/>
+          <Route path="/login" render={props=><Login {...props} callbackFromParents= {this.username_Callback} callbackFromParentsfortoken= {this.token_Callback}/>}/>
           <Route path="/signup" component={Register}/>
         </Switch>
         <Footer />
