@@ -53,6 +53,7 @@ export default class Register extends React.Component {
           console.log("there is an error you cannot redirect");
         } else {
           localStorage.setItem("token", body.token);
+          localStorage.setItem("user", JSON.stringify(body.userinfo));
           Cookie.set("token", body.token);
           sessionStorage.setItem("token",body.token);
           this.props.callbackFromParents(body.userinfo.type)

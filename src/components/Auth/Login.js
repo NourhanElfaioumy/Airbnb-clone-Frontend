@@ -35,7 +35,10 @@ export default class Login extends React.Component {
         if (body.error) {
           console.log("there is an error you cannot redirect");
         } else {
+          console.log(body.userinfo)
+          console.log(JSON.stringify(body.userinfo))
           localStorage.setItem("token", body.token);
+          localStorage.setItem("user", JSON.stringify(body.userinfo));
           Cookie.set("token", body.token);
           sessionStorage.setItem("token",body.token);
           this.props.callbackFromParents(body.userinfo.type)

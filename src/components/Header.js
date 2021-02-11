@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 const Header = ({ dataFromParent,token}) => {
   const location = useLocation();
   const handleHostProfile=()=>{
-      
+
   }
   if (Cookies.get('token') && location.pathname ==='/host') {
     return (
@@ -41,8 +41,8 @@ const Header = ({ dataFromParent,token}) => {
               </Dropdown.Item>
               <Dropdown.Item>
                 <Link to={"/logout"} onClick={()=>{
-                    localStorage.removeItem('token')
-                    sessionStorage.removeItem('token')
+                    sessionStorage.clear()
+                    localStorage.clear()
                     Cookies.remove('token')
                     window.location.replace('/')
                 }}>Logout</Link>
@@ -79,8 +79,8 @@ const Header = ({ dataFromParent,token}) => {
               </Dropdown.Item>
               <Dropdown.Item>
                 <Link to={"/logout"} onClick={()=>{
-                    localStorage.removeItem('token')
-                    sessionStorage.removeItem('token')
+                    localStorage.clear()
+                    sessionStorage.clear()
                     Cookies.remove('token')
                     window.location.replace('/');
                 }}>Logout</Link>
