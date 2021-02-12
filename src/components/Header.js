@@ -51,6 +51,9 @@ const Header = ({ dataFromParent,token,propss}) => {
                 <Link to={"/host/profile"} onClick={handleHostProfile}>Profile</Link>
               </Dropdown.Item>
               <Dropdown.Item>
+                <Link to={"/host/hostedhomes"}>Homes</Link>
+              </Dropdown.Item>
+              <Dropdown.Item>
                 <Link to={"/host/hosthome"}>Host a Home</Link>
               </Dropdown.Item>
               <Dropdown.Item>
