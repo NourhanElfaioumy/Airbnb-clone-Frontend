@@ -22,14 +22,13 @@ const Header = ({ dataFromParent,token,propss}) => {
           },
         }).then(response=>{
             response.json().then((body)=>{
-                console.log(body)
                 var data = body;
                 propss(data);
                 history.push('/host/profile')
             })
         })
   }
-  if (Cookies.get('token') && location.pathname ==='/host') {
+  if (Cookies.get('token') && location.pathname.includes("/host")) {
     return (
       <div className="header">
         <Link to="/">
@@ -67,7 +66,7 @@ const Header = ({ dataFromParent,token,propss}) => {
         </div>
       </div>
     );
-  } else if (Cookies.get('token') && location.pathname === "/user") {
+  } else if (Cookies.get('token') && location.pathname.includes("/user")) {
     return (
       <div className="header">
         <Link to="/">

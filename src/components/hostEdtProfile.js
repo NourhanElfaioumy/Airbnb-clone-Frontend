@@ -1,0 +1,133 @@
+import React from "react";
+import {Link, useHistory} from "react-router-dom";
+class EditHostProfile extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email:this.props.location.myCustomProps.email,
+            firstname:this.props.location.myCustomProps.firstName,
+            lastname:this.props.location.myCustomProps.lastName,
+            phone:this.props.location.myCustomProps.phoneNumber,
+            region:this.props.location.myCustomProps.region
+        }
+        this.handleEditProfile = this.handleEditProfile.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+    handleChange(evt) {
+        this.setState({ [evt.target.name]: evt.target.value });
+    }
+    async handleEditProfile(e){
+        e.preventDefault();
+        await fetch(`Http://localhost:9000/host/editProfile/${this.props.match.params.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                email: this.state.email,
+                firstName:this.state.firstname,
+                lastName: this.state.lastname,
+                phoneNumber:this.state.phone,
+                region:this.state.region
+              }),
+              headers: {
+                "Content-type": "application/json; charset=UTF-8",
+              },
+          }).then(response => response.json()).then(result => {
+              this.props.callbackFromEditProfile(result)
+              this.props.history.push('/host/profile')
+          }).catch(error => {
+            console.error('Error:', error);
+          });
+    }
+    render() { 
+        return (      
+        <div classNameName="main-profile" style={{ paddingBottom: "50px" }}>
+        <div className="main-content">
+          <div className="container-fluid mt--7">
+            <div className="row">
+              <div className="col-xl-12 order-xl-1">
+                <div className="card shadow" style={{ marginTop: "100px" }}>
+                  <div className="card-body">
+                    <img
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQnt6T0yd57zcsFiLX9B0Ig7pzcnyazEeAtg&usqp=CAUD"
+                      alt=""
+                      style={{
+                        width: "200px",
+                        height: "200px",
+                        display: "block",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        marginBottom: "50px",
+                      }}
+                    />
+                    <form>
+                      <h6 className="heading-small text-muted mb-4">
+                        User information
+                      </h6>
+                      <div className="pl-lg-4">
+                        <div className="row">
+                          <div className="col-lg-12">
+                            <div className="form-group">
+                              <label className="form-control-label" htmlFor="input-email">
+                                Email address
+                              </label>
+                              <input type="email" id="input-email" className="form-control form-control-alternative" name="email" value={this.state.email} onChange={this.handleChange}/>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <div className="form-group focused">
+                              <label className="form-control-label" htmlFor="input-first-name">
+                                First name
+                              </label>
+                              <input type="text" id="input-first-name" className="form-control form-control-alternative" name="firstname" value={this.state.firstname} onChange={this.handleChange}/>
+                            </div>
+                          </div>
+                          <div className="col-lg-6">
+                            <div className="form-group focused">
+                              <label className="form-control-label" htmlFor="input-last-name">
+                                Last name
+                              </label>
+                              <input type="text" id="input-last-name" className="form-control form-control-alternative" name="lastname" value={this.state.lastname}/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <hr className="my-4" />
+                      <h6 className="heading-small text-muted mb-4">
+                        Contact information
+                      </h6>
+                      <div className="pl-lg-4">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group focused">
+                              <label className="form-control-label" htmlFor="input-address">
+                                Phone number
+                              </label>
+                              <input id="input-address" className="form-control form-control-alternative" type="text" name="phone" value={this.state.phone} onChange={this.handleChange}/>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group focused">
+                              <label className="form-control-label" htmlFor="region">
+                                Region
+                              </label>
+                              <input id="input-address" className="form-control form-control-alternative" type="text" name="region" value={this.state.region} onChange={this.handleChange}/>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="row"></div>
+                      </div>
+                    </form>
+                    <button type="button" onClick={this.handleEditProfile} className="btn btn-danger" style={{ marginLeft: "570px", marginTop: "20px" }}>Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer></footer>
+      </div>);
+    }
+}
+ 
+export default EditHostProfile;
