@@ -10,20 +10,20 @@ import SearchPage from './components/SearchPage'
 import { BrowserRouter as Router, Switch,Route } from "react-router-dom";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
+import HostProfile from "./components/hostProfile";
 const createStoreWithMW = applyMiddleware(promiseMW)(createStore);
 export default class App extends React.Component {
   constructor(props){
     super(props);
     this.state={
         data_type:'',
-        token:""
+        token:"",
+        data:""
     }
-
     this.username_Callback=this.username_Callback.bind(this)
     this.token_Callback=this.token_Callback.bind(this)
-
+    this.handledata=this.handledata.bind(this)
 }
-
 username_Callback(usernamecallback){
 this.setState({data_type:usernamecallback});
 
@@ -32,18 +32,22 @@ token_Callback(token){
   this.setState({token:token});
   
   }
+  handledata(dataa) {
+    this.setState({data:dataa});
+}
   render = () =>{
    return(
       <div className="app">
       <Router>
-        <Header dataFromParent = {this.state.data_type} token ={this.state.token} location ={this.props.location}/>
+        <Header dataFromParent = { this.state.data_type} token ={this.state.token} location ={this.props.location} propss={this.handledata}/>
         <Switch>
-          <Route path="/search" component={SearchPage}/>
+          <Route exact path="/search" component={SearchPage}/>
           <Route exact path="/" component={Home}/>
-          <Route path="/user" component={Home}/>
-          <Route path="/host" component={Home}/>
-          <Route path="/login" render={props=><Login {...props} callbackFromParents= {this.username_Callback} callbackFromParentsfortoken= {this.token_Callback}/>}/>
-          <Route path="/signup" render={props=><Register {...props} callbackFromParents= {this.username_Callback} callbackFromParentsfortoken= {this.token_Callback}/>}/>
+          <Route exact path="/user" component={Home}/>
+          <Route exact path="/host" component={Home}/>
+          <Route exact path="/host/profile" render={props=><HostProfile datafrompare={this.state.data} />}/>
+          <Route exact path="/login" render={props=><Login {...props} callbackFromParents= {this.username_Callback} callbackFromParentsfortoken= {this.token_Callback}/>}/>
+          <Route exact path="/signup" render={props=><Register {...props} callbackFromParents= {this.username_Callback} callbackFromParentsfortoken= {this.token_Callback}/>}/>
         </Switch>
         <Footer />
       </ Router>

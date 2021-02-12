@@ -2,17 +2,32 @@
 import React from "react";
 import "./Header.css";
 import Cookies from 'js-cookie';
-import { useLocation } from 'react-router-dom'
+import { useLocation,useHistory} from 'react-router-dom'
 // import LanguageIcon from "@material-ui/icons/Language";
 // import MenuIcon from "@material-ui/icons/Menu";
 import Dropdown from "react-bootstrap/Dropdown";
 import "react-dropdown/style.css";
 import { Avatar } from "@material-ui/core";
 import { Link } from "react-router-dom";
-const Header = ({ dataFromParent,token}) => {
+const Header = ({ dataFromParent,token,propss}) => {
   const location = useLocation();
-  const handleHostProfile=()=>{
-
+  const history = useHistory();
+  const handleHostProfile=async(ev)=>{
+        ev.preventDefault();
+        await fetch("http://localhost:9000/host/profile", {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            "x-access-token":localStorage.getItem('token')
+          },
+        }).then(response=>{
+            response.json().then((body)=>{
+                console.log(body)
+                var data = body;
+                propss(data);
+                history.push('/host/profile')
+            })
+        })
   }
   if (Cookies.get('token') && location.pathname ==='/host') {
     return (
@@ -34,7 +49,7 @@ const Header = ({ dataFromParent,token}) => {
             ></Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item>
-                <Link to={"/host/profile"}>Profile</Link>
+                <Link to={"/host/profile"} onClick={handleHostProfile}>Profile</Link>
               </Dropdown.Item>
               <Dropdown.Item>
                 <Link to={"/host/hosthome"}>Host a Home</Link>
