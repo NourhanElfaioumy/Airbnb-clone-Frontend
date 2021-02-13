@@ -5,22 +5,26 @@ class UserTrips extends React.Component {
     super(props);
     this.state = {
       trips: "",
-      homedetails: "",
+      homedetails: [],
+      list: "",
     };
-    this.gettripdetails = this.gettripdetails.bind(this)
+    this.gettripdetails = this.gettripdetails.bind(this);
   }
-   gettripdetails(id) {
-     fetch(`http://localhost:9000/user/trip/${id}`, {
+  async gettripdetails(id) {
+    await fetch(`http://localhost:9000/user/trip/${id}`, {
       method: "GET",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
-    }).then((response) => response.json().then((home) => {
-        this.setState({homedetails:home})
-    }));
+    }).then((response) =>
+      response.json().then((home) => {
+        this.setState({ homedetails: home });
+        console.log(home);
+      })
+    );
   }
-  componentDidMount() {
-    fetch(`http://localhost:9000/user/trips`, {
+  async componentDidMount() {
+    await fetch(`http://localhost:9000/user/trips`, {
       method: "GET",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -29,42 +33,62 @@ class UserTrips extends React.Component {
     }).then((response) =>
       response.json().then((body) => {
         this.setState({ trips: body });
+        this.state.trips.map( (item) => {
+           fetch(`http://localhost:9000/user/trip/${item.hostedHomeID}`, {
+            method: "GET",
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Credentials": true,
+            },
+          }).then((response) =>
+            response.json().then((home) => {
+              this.setState({ 
+                homedetails: this.state.homedetails.concat([home])
+              })
+            })
+          );
+        });
       })
     );
   }
   render() {
+    var output= this.state.homedetails.reduce((acc,curr,i)=>{
+      acc[i]={...acc[i],name:curr,link:this.state.trips[i]}
+      return acc
+     },[])
+     console.log(output)
     if (this.state.trips) {
       if (this.state.trips.length > 0) {
         return (
           <div className="row">
-            {this.state.trips.map((item) =>(
-                this.gettripdetails(item.hostedHomeID),
-              <div className="col-sm-4 ">
-                <div className="card">
-                  <div className="image">
-                    <img
-                      src={`${process.env.PUBLIC_URL}/imgs/background.jpg`}
-                      alt=""
-                    />
+            {output.map((item) =>(
+                  <div className="col-sm-4 ">
+                  <div className="card">
+                    <div className="image">
+                      <img
+                        src={`${process.env.PUBLIC_URL}/imgs/background.jpg`}
+                        alt=""
+                      />
+                    </div>
+                    <div className="card-inner">
+                      <div className="header">
+                        <h2>{item.name[0].name}</h2>
+                      </div>
+                      <div className="header">
+                        <h3>{item.name[0].location}</h3>
+                      </div>
+                      <div className="content">
+                        <p>CheckIn : {item.link.checkIn}</p>
+                        <p>CheckOut : {item.link.checkOut}</p>
+                        <p>Guests : {item.link.no_Of_Guests}</p>
+                        <p>Cost : {item.link.cost}</p>
+                      </div>
+                    </div>
+                    <div className="justify-content-center d-block text-center"></div>
                   </div>
-                  <div className="card-inner">
-                    <div className="header">
-                      <h2>{this.state.homedetails.name}</h2>
-                    </div>
-                    <div className="header">
-                    <h3>{this.state.homedetails.location}</h3>
-                    </div>
-                    <div className="content">
-                      <p>CheckIn : {item.checkIn}</p>
-                      <p>CheckOut : {item.checkOut}</p>
-                      <p>Guests : {item.no_Of_Guests}</p>
-                      <p>Cost : {item.cost}</p>
-                    </div>
-                  </div>
-                  <div className="justify-content-center d-block text-center"></div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         );
       } else {
