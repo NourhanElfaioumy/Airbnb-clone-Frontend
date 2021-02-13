@@ -1,8 +1,4 @@
 import React from "react";
-// import "./App.scss";
-import { applyMiddleware, createStore } from "redux";
-import { Provider } from "react-redux";
-import promiseMW from "redux-promise";
 import Header from "./components/Header";
 import { LastLocationProvider } from "react-router-last-location";
 import Home from "./components/Home";
@@ -14,9 +10,11 @@ import Register from "./components/Auth/Register";
 import HostProfile from "./components/hostProfile";
 import HostHome from "./components/HostHome";
 import EditHostProfile from "./components/hostEdtProfile";
+import EditUserProfile from "./components/EditUserProfile";
 import HostedHomes from "./components/HostedHomes";
 import EditHostedHomes from "./components/EditHostedHomes";
-const createStoreWithMW = applyMiddleware(promiseMW)(createStore);
+import UserProfile from "./components/UserProfile";
+import UserTrips from "./components/UserTrips";
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -26,12 +24,14 @@ export default class App extends React.Component {
       data: "",
       datafromEdit: "",
       home: "",
+      userData:""
     };
     this.username_Callback = this.username_Callback.bind(this);
     this.token_Callback = this.token_Callback.bind(this);
     this.handledata = this.handledata.bind(this);
     this.editProfile_Callback = this.editProfile_Callback.bind(this);
     this.editHostedHome_Callback = this.editHostedHome_Callback.bind(this);
+    this.editUserData_Callback = this.editUserData_Callback.bind(this)
   }
   username_Callback(usernamecallback) {
     this.setState({ data_type: usernamecallback });
@@ -48,17 +48,15 @@ export default class App extends React.Component {
   editHostedHome_Callback(home) {
     this.setState({ home: home });
   }
+  editUserData_Callback(data){
+    this.setState({userData:data})
+  }
   render = () => {
     return (
       <div className="app">
         <Router>
           <LastLocationProvider>
-            <Header
-              dataFromParent={this.state.data_type}
-              token={this.state.token}
-              location={this.props.location}
-              propss={this.handledata}
-            />
+            <Header dataFromParent={this.state.data_type} token={this.state.token} location={this.props.location} propss={this.handledata}/>
             <Switch>
               <Route exact path="/search" component={SearchPage} />
               <Route exact path="/" component={Home} />
@@ -66,39 +64,14 @@ export default class App extends React.Component {
               <Route exact path="/host" component={Home} />
               <Route exact path="/host/editHostedHome/:id" render={(props) => (<EditHostedHomes {...props} dataFromHomes={this.state.home}/>)} />
               <Route exact path="/host/editProfile/:id" render={(props) => (<EditHostProfile {...props} callbackFromEditProfile={this.editProfile_Callback}/>)}/>
-              <Route
-                exact
-                path="/host/profile"
-                render={(props) => (
-                  <HostProfile datafrompare={this.state.data}
-                    datafromEdit={this.state.datafromEdit}
-                  />
-                )}
-              />
+              <Route exact path="/user/editProfile/:id" render={(props) => (<EditUserProfile {...props} dataFromProfile={this.state.userData}/>)} />
+              <Route exact path="/host/profile" render={(props) => (<HostProfile datafrompare={this.state.data} datafromEdit={this.state.datafromEdit}/>)}/>
+              <Route exact path="/user/profile" render={(props) => (<UserProfile {...props} userData={this.editUserData_Callback}/>)}/>
               <Route exact path="/host/hosthome" component={HostHome} />
+              <Route exact path="/user/trips" component={UserTrips} />
               <Route exact path="/host/hostedhomes" render={(props) => (<HostedHomes {...props} hostHome={this.editHostedHome_Callback}/>)}/>
-              <Route
-                exact
-                path="/login"
-                render={(props) => (
-                  <Login
-                    {...props}
-                    callbackFromParents={this.username_Callback}
-                    callbackFromParentsfortoken={this.token_Callback}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/signup"
-                render={(props) => (
-                  <Register
-                    {...props}
-                    callbackFromParents={this.username_Callback}
-                    callbackFromParentsfortoken={this.token_Callback}
-                  />
-                )}
-              />
+              <Route exact path="/login" render={(props) => (<Login {...props} callbackFromParents={this.username_Callback} callbackFromParentsfortoken={this.token_Callback}/>)}/>
+              <Route exact path="/signup" render={(props) => (<Register {...props} callbackFromParents={this.username_Callback} callbackFromParentsfortoken={this.token_Callback}/>)}/>
             </Switch>
             <Footer />
           </LastLocationProvider>
@@ -107,68 +80,3 @@ export default class App extends React.Component {
     );
   };
 }
-// constructor(props) {
-//   super(props);
-//   this.state = {
-//     isLogginActive: true
-//   };
-// }
-
-// componentDidMount() {
-//   //Add .right by default
-//   this.rightSide.classList.add("right");
-// }
-
-// changeState() {
-//   const { isLogginActive } = this.state;
-
-//   if (isLogginActive) {
-//     this.rightSide.classList.remove("right");
-//     this.rightSide.classList.add("left");
-//   } else {
-//     this.rightSide.classList.remove("left");
-//     this.rightSide.classList.add("right");
-//   }
-//   this.setState(prevState => ({ isLogginActive: !prevState.isLogginActive }));
-// }
-
-// render() {
-//   const { isLogginActive } = this.state;
-//   const current = isLogginActive ? "Register" : "Login";
-//   const currentActive = isLogginActive ? "login" : "register";
-//   return (
-//     <div className="App">
-//       <div className="login">
-//         <div className="container" ref={ref => (this.container = ref)}>
-//           {isLogginActive && (
-//             <Login containerRef={ref => (this.current = ref)} />
-//           )}
-//           {!isLogginActive && (
-//             <Register containerRef={ref => (this.current = ref)} />
-//           )}
-//         </div>
-//         <RightSide
-//           current={current}
-//           currentActive={currentActive}
-//           containerRef={ref => (this.rightSide = ref)}
-//           onClick={this.changeState.bind(this)}
-//         />
-//       </div>
-//     </div>
-//   );
-// }
-// const RightSide = props => {
-//   return (
-//     <div
-//       className="right-side"
-//       ref={props.containerRef}
-//       onClick={props.onClick}
-//     >
-//       <div className="inner-container">
-//         <div className="text">{props.current}</div>
-//       </div>
-//     </div>
-//   );
-//  };
-
-// export default App;
