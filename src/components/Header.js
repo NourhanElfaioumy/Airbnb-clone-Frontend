@@ -31,7 +31,7 @@ const Header = ({ dataFromParent,token,propss}) => {
   if (Cookies.get('token') && location.pathname.includes("/host")) {
     return (
       <div className="header">
-        <Link to="/">
+        <Link to="/host">
           <img
             className="header__icon"
             src="https://i.pinimg.com/originals/3c/bf/be/3cbfbe148597341fa56f2f87ade90956.png"
@@ -72,7 +72,7 @@ const Header = ({ dataFromParent,token,propss}) => {
   } else if (Cookies.get('token') && location.pathname.includes("/user")) {
     return (
       <div className="header">
-        <Link to="/">
+        <Link to="/user">
           <img
             className="header__icon"
             src="https://i.pinimg.com/originals/3c/bf/be/3cbfbe148597341fa56f2f87ade90956.png"

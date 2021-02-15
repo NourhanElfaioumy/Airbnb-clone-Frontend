@@ -1,5 +1,6 @@
 import React from "react";
 import "./HostedHomes.css";
+import * as moment from 'moment'
 class UserTrips extends React.Component {
   constructor(props) {
     super(props);

@@ -12,7 +12,7 @@
 }
 
 .searchResult > img {
-  height: 215px;
+  height: 315px;
   width: 586px;
   border-radius: 10px;
   overflow: hidden;
@@ -68,6 +68,5 @@
 
 .searchResults__price {
   position: absolute;
-  bottom: -14px;
   right: 30px;
 }

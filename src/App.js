@@ -24,14 +24,18 @@ export default class App extends React.Component {
       data: "",
       datafromEdit: "",
       home: "",
-      userData:""
+      userData:"",
+      datafromHome:"",
+      searchData:""
     };
     this.username_Callback = this.username_Callback.bind(this);
     this.token_Callback = this.token_Callback.bind(this);
     this.handledata = this.handledata.bind(this);
     this.editProfile_Callback = this.editProfile_Callback.bind(this);
     this.editHostedHome_Callback = this.editHostedHome_Callback.bind(this);
-    this.editUserData_Callback = this.editUserData_Callback.bind(this)
+    this.editUserData_Callback = this.editUserData_Callback.bind(this);
+    this.dataa= this.dataa.bind(this);
+    this.searchData= this.searchData.bind(this);
   }
   username_Callback(usernamecallback) {
     this.setState({ data_type: usernamecallback });
@@ -51,6 +55,12 @@ export default class App extends React.Component {
   editUserData_Callback(data){
     this.setState({userData:data})
   }
+  dataa(data){
+    this.setState({datafromHome:data})
+  }
+  searchData(data){
+    this.setState({searchData:data})
+  }
   render = () => {
     return (
       <div className="app">
@@ -58,9 +68,9 @@ export default class App extends React.Component {
           <LastLocationProvider>
             <Header dataFromParent={this.state.data_type} token={this.state.token} location={this.props.location} propss={this.handledata}/>
             <Switch>
-              <Route exact path="/search" component={SearchPage} />
+              <Route exact path="/user/search" render={(props) => (<SearchPage data={this.state.datafromHome} search={this.state.searchData}/>)}/>
               <Route exact path="/" component={Home} />
-              <Route exact path="/user" component={Home} />
+              <Route exact path="/user" render={(props) => (<Home {...props} data={this.dataa} searchData={this.searchData}/>)}/>
               <Route exact path="/host" component={Home} />
               <Route exact path="/host/editHostedHome/:id" render={(props) => (<EditHostedHomes {...props} dataFromHomes={this.state.home}/>)} />
               <Route exact path="/host/editProfile/:id" render={(props) => (<EditHostProfile {...props} callbackFromEditProfile={this.editProfile_Callback}/>)}/>
