@@ -32,7 +32,7 @@ export default class Register extends React.Component {
     var birthdate = this.state.birthdate;
     var type = this.state.type;
     ev.preventDefault();
-    await fetch("http://localhost:9000/signup", {
+    await fetch("https://tranquil-sands-93018.herokuapp.com/signup", {
       method: "POST",
       body: JSON.stringify({
         email: email,

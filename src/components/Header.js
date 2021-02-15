@@ -14,7 +14,7 @@ const Header = ({ dataFromParent,token,propss}) => {
   const history = useHistory();
   const handleHostProfile=async(ev)=>{
         ev.preventDefault();
-        await fetch("http://localhost:9000/host/profile", {
+        await fetch("https://tranquil-sands-93018.herokuapp.com/host/profile", {
           method: "GET",
           headers: {
             "Content-type": "application/json; charset=UTF-8",

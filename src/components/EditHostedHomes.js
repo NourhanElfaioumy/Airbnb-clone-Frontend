@@ -53,7 +53,7 @@ class EditHostedHomes extends React.Component {
   async editData(e) {
     e.preventDefault();
     await fetch(
-      `http://localhost:9000/host/editHostedHome/${this.props.dataFromHomes._id}`,
+      `https://tranquil-sands-93018.herokuapp.com/host/editHostedHome/${this.props.dataFromHomes._id}`,
       {
         method: "PUT",
         body: JSON.stringify({

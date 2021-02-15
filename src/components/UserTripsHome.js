@@ -7,7 +7,7 @@ class UserTripsHome extends React.Component {
          };
     }
     //  componentDidMount() {
-    //       fetch(`http://localhost:9000/user/trip/${this.props.item.hostedHomeID}`, {
+    //       fetch(`https://tranquil-sands-93018.herokuapp.com/user/trip/${this.props.item.hostedHomeID}`, {
     //       method: "GET",
     //       headers:{
     //         "Content-type": "application/json; charset=UTF-8",

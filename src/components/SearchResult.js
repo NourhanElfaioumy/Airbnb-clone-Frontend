@@ -12,7 +12,7 @@ function SearchResult({ img, location, title, description, star, price,total,gue
   const handleShow = () => setShow(true);
   const onsubmit=async(e)=>{
        e.preventDefault();
-       await fetch(`http://localhost:9000/user/reserveHome/${hostedHomeID}`,{
+       await fetch(`https://tranquil-sands-93018.herokuapp.com/user/reserveHome/${hostedHomeID}`,{
            method:"POST",
            body:JSON.stringify({
               hostID:hostID,

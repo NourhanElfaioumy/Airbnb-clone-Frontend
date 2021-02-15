@@ -18,7 +18,7 @@ class EditUserProfile extends React.Component {
     }
     async handleEditProfile(e){
         e.preventDefault();
-        await fetch(`Http://localhost:9000/user/editProfile/${this.props.match.params.id}`, {
+        await fetch(`https://tranquil-sands-93018.herokuapp.com/user/editProfile/${this.props.match.params.id}`, {
             method: 'PUT',
             body: JSON.stringify({
                 email: this.state.email,

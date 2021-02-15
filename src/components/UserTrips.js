@@ -12,7 +12,7 @@ class UserTrips extends React.Component {
     this.gettripdetails = this.gettripdetails.bind(this);
   }
   async gettripdetails(id) {
-    await fetch(`http://localhost:9000/user/trip/${id}`, {
+    await fetch(`https://tranquil-sands-93018.herokuapp.com/user/trip/${id}`, {
       method: "GET",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -25,7 +25,7 @@ class UserTrips extends React.Component {
     );
   }
   async componentDidMount() {
-    await fetch(`http://localhost:9000/user/trips`, {
+    await fetch(`https://tranquil-sands-93018.herokuapp.com/user/trips`, {
       method: "GET",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -35,7 +35,7 @@ class UserTrips extends React.Component {
       response.json().then((body) => {
         this.setState({ trips: body });
         this.state.trips.map( (item) => {
-           fetch(`http://localhost:9000/user/trip/${item.hostedHomeID}`, {
+           fetch(`https://tranquil-sands-93018.herokuapp.com/user/trip/${item.hostedHomeID}`, {
             method: "GET",
             headers: {
               "Content-type": "application/json; charset=UTF-8",

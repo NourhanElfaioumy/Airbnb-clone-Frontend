@@ -9,7 +9,7 @@ class HostedHomes extends React.Component {
   }
   async deleteData(id) {
     debugger;
-    await fetch(`http://localhost:9000/host/deleteHostedHome/${id}`, {
+    await fetch(`https://tranquil-sands-93018.herokuapp.com/host/deleteHostedHome/${id}`, {
       method: "DELETE",
     }).then(console.log("ok"));
   }
@@ -53,7 +53,7 @@ class HostedHomes extends React.Component {
                       className="btn btn-danger"
                       onClick={async () => {
                         await fetch(
-                          `http://localhost:9000/host/deleteHostedHome/${item._id}`,
+                          `https://tranquil-sands-93018.herokuapp.com/host/deleteHostedHome/${item._id}`,
                           {
                             method: "DELETE",
                           }
@@ -79,7 +79,7 @@ class HostedHomes extends React.Component {
     }
   }
   async componentDidMount() {
-    await fetch("http://localhost:9000/host/hostedhomes", {
+    await fetch("https://tranquil-sands-93018.herokuapp.com/host/hostedhomes", {
       method: "GET",
       headers: {
         "Content-type": "application/json; charset=UTF-8",

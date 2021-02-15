@@ -34,7 +34,7 @@ class HostHome extends React.Component {
   }
   async handleHostHome(e) {
     e.preventDefault();
-    await fetch("http://localhost:9000/host/hosthome", {
+    await fetch("https://tranquil-sands-93018.herokuapp.com/host/hosthome", {
       method: "POST",
       body: JSON.stringify({
         address: this.state.address,

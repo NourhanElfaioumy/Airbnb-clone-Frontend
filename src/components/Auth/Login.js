@@ -21,7 +21,7 @@ export default class Login extends React.Component {
     var password = this.state.password;
     ev.preventDefault();
     // const data = { email: email, password: password };
-    await fetch("http://localhost:9000/login", {
+    await fetch("https://tranquil-sands-93018.herokuapp.com/login", {
       method: "POST",
       body: JSON.stringify({
         email: email,

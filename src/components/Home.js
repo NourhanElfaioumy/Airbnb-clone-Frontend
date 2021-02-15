@@ -20,7 +20,7 @@ class Home extends React.Component {
   }
   async onSearch(e) {
     e.preventDefault();
-    await fetch("http://localhost:9000/search", {
+    await fetch("https://tranquil-sands-93018.herokuapp.com/search", {
       method: "POST",
       body: JSON.stringify({
         location: this.state.location,

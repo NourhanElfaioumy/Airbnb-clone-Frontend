@@ -10,7 +10,7 @@ class UserProfile extends React.Component {
     };
   }
   async componentDidMount(){
-      await fetch("http://localhost:9000/user/profile",{
+      await fetch("https://tranquil-sands-93018.herokuapp.com/user/profile",{
           method:"GET",
           headers:{
             "Content-type": "application/json; charset=UTF-8",
