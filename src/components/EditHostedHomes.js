@@ -1,9 +1,14 @@
 import React from "react";
 import "./HostHome.css";
 import { $ } from "react-jquery-plugin";
+import Error from "./404found";
 class EditHostedHomes extends React.Component {
   constructor(props,{history}) {
     super(props);
+    if(!this.props.location.userData && !localStorage.getItem("token")){
+      this.props.history.push("/error404")
+    }
+    else{
     this.state = {
       address: this.props.dataFromHomes.address,
       location: this.props.dataFromHomes.location,
@@ -20,6 +25,7 @@ class EditHostedHomes extends React.Component {
     };
     this.editData = this.editData.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
   }
   componentDidMount() {
     $(".form-control").each(function () {
@@ -75,13 +81,23 @@ class EditHostedHomes extends React.Component {
         },
       }
     ).then((response) =>response.json().then(async(body) => {
-          this.props.history.push('/host/hostedhomes');
+      if(!localStorage.getItem('token')){
+        this.props.history.push('/error404');
+      }
+      else{
+        this.props.history.push('/host/hostedhomes');
+      }
         })
       ).catch((err) => {
         console.log(err);
       });
   }
   render() {
+    if(!localStorage.getItem("token" || JSON.parse(localStorage.getItem('user')).type !== true)){
+      this.props.history.push("/error404")
+      return <Error/>
+    }
+    else{
     return (
       <div
         id="booking"
@@ -304,6 +320,7 @@ class EditHostedHomes extends React.Component {
         </div>
       </div>
     );
+    }
   }
 }
 

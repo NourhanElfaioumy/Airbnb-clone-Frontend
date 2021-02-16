@@ -33,18 +33,28 @@ export default class Login extends React.Component {
     }).then((response) => {
       response.json().then((body) => {
         if (body.error) {
-          console.log("there is an error you cannot redirect");
+          document.getElementById("error").className = document
+            .getElementById("error")
+            .className.replace(/(?:^|\s)d-none(?!\S)/g, "d-block");
         } else {
-          localStorage.setItem("token", body.token);
-          localStorage.setItem("user", JSON.stringify(body.userinfo));
-          Cookie.set("token", body.token);
-          sessionStorage.setItem("token",body.token);
-          this.props.callbackFromParents(body.userinfo.type)
-          this.props.callbackFromParentsfortoken(body.token)
-          if (body.userinfo.type === false) {
-            this.props.history.push("/user");
+          if (body.token === null) {
+            document.getElementById(
+              "error"
+            ).className = document
+              .getElementById("error")
+              .className.replace(/(?:^|\s)d-none(?!\S)/g, "d-block");
           } else {
-            this.props.history.push("/host");
+            localStorage.setItem("token", body.token);
+            localStorage.setItem("user", JSON.stringify(body.userinfo));
+            Cookie.set("token", body.token);
+            sessionStorage.setItem("token", body.token);
+            this.props.callbackFromParents(body.userinfo.type);
+            this.props.callbackFromParentsfortoken(body.token);
+            if (body.userinfo.type === false) {
+              this.props.history.push("/user");
+            } else {
+              this.props.history.push("/host");
+            }
           }
         }
       });
@@ -57,6 +67,9 @@ export default class Login extends React.Component {
           <div className="image">
             <img src={loginImg} alt="" />
           </div>
+          <div className="d-none ml-4 text-danger" id="error">
+            <h5 style={{ color: "red" }}>Incorrect email or password</h5>
+          </div>
           <div className="form">
             <div className="form-group">
               <label htmlFor="username">Email</label>
@@ -66,7 +79,8 @@ export default class Login extends React.Component {
                 placeholder="email"
                 value={this.state.email}
                 onChange={this.handleChange}
-              required/>
+                required
+              />
             </div>
             <div className="form-group">
               <label htmlFor="password">Password</label>
@@ -76,7 +90,8 @@ export default class Login extends React.Component {
                 placeholder="password"
                 value={this.state.password}
                 onChange={this.handleChange}
-              required/>
+                required
+              />
             </div>
           </div>
         </div>

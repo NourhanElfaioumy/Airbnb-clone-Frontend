@@ -15,6 +15,7 @@ import HostedHomes from "./components/HostedHomes";
 import EditHostedHomes from "./components/EditHostedHomes";
 import UserProfile from "./components/UserProfile";
 import UserTrips from "./components/UserTrips";
+import Error from "./components/404found";
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -82,6 +83,7 @@ export default class App extends React.Component {
               <Route exact path="/host/hostedhomes" render={(props) => (<HostedHomes {...props} hostHome={this.editHostedHome_Callback}/>)}/>
               <Route exact path="/login" render={(props) => (<Login {...props} callbackFromParents={this.username_Callback} callbackFromParentsfortoken={this.token_Callback}/>)}/>
               <Route exact path="/signup" render={(props) => (<Register {...props} callbackFromParents={this.username_Callback} callbackFromParentsfortoken={this.token_Callback}/>)}/>
+              <Route path="*" component={Error}/>
             </Switch>
             <Footer />
           </LastLocationProvider>

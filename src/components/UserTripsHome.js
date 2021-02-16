@@ -1,39 +1,37 @@
 import React from "react";
-class UserTripsHome extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { 
-            homedetails:""
-         };
-    }
-    //  componentDidMount() {
-    //       fetch(`https://tranquil-sands-93018.herokuapp.com/user/trip/${this.props.item.hostedHomeID}`, {
-    //       method: "GET",
-    //       headers:{
-    //         "Content-type": "application/json; charset=UTF-8",
-    //       }
-    //     }).then(response =>
-    //         response.json().then((home) => {
-    //         this.setState({homedetails:home})
-    //       })
-    //     );
-    //   }
-    render() { 
-        console.log(this.props.homes)
+import * as moment from 'moment';
+
+function UserTripsHome({img,name,location,guests,checkIn,checkOut,cost}){
+    var checkin = moment(checkIn).format('MM/DD/YYYY');
+    var checkout = moment(checkOut).format('MM/DD/YYYY');
         return (
-            this.props.homes.map((i)=>(
-                <div>
-                <div className="header" style={{height:"60px"}}>
-                  <h2>{i.name}</h2>
+            <div className="col-sm-4 ">
+            <div className="card">
+              <div className="image">
+                <img
+                  src={`${process.env.PUBLIC_URL}/imgs/background.jpg`}
+                  alt=""
+                />
+              </div>
+              <div className="card-inner">
+                <div className="header">
+                  <h2>{name}</h2>
                 </div>
                 <div className="header">
-                  <h3>{i.location}</h3>
+                  <h3>{location}</h3>
                 </div>
+                <div className="content">
+                  <p>CheckIn : {checkin}</p>
+                  <p>CheckOut : {checkout}</p>
+                  <p>Guests : {guests}</p>
+                  <p>Cost : {cost} EGP</p>
                 </div>
-            ))
+              </div>
+              <div className="justify-content-center d-block text-center"></div>
+            </div>
+          </div>
 
         );
     }
-}
  
 export default UserTripsHome;

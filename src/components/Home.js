@@ -1,6 +1,7 @@
 import React from "react";
 import "./Home.css";
 import { Cards } from "./Cards";
+import Error from "./404found";
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -43,6 +44,22 @@ class Home extends React.Component {
         }).catch(err=>console.log(err));
   }
   render() {
+    debugger;
+    if(!localStorage.getItem("token") && (window.location.pathname === '/user' || window.location.pathname === '/host')){
+      this.props.history.push('/error404');
+      return(<Error/>)
+    }
+    else if((localStorage.getItem("user") && localStorage.getItem("user").type === true) || (!localStorage.getItem("token") && !localStorage.getItem("user"))){
+      return (
+        <div className="home">
+        <div className="input-group row  justify-content-center pt-5" style={{backgroundImage: `url('${process.env.PUBLIC_URL}/imgs/background.jpg')`,backgroundSize: "100%",height: "300px",}}>
+        </div>
+        <Cards />
+        {/* <Footer/> */}
+      </div>
+      )
+    }
+    else{
     return (
       <div className="home">
         <div
@@ -115,6 +132,7 @@ class Home extends React.Component {
         {/* <Footer/> */}
       </div>
     );
+  }
   }
 }
 

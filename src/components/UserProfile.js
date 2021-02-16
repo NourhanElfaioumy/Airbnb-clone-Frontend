@@ -2,6 +2,7 @@ import React from "react";
 import "./hostProfile.css";
 import { withLastLocation } from 'react-router-last-location';
 import { Link } from "react-router-dom";
+import Error from "./404found"
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -21,6 +22,11 @@ class UserProfile extends React.Component {
       }))
   }
   render() {
+    if(!localStorage.getItem('token')){
+      this.props.history.push("/error404");
+      return <Error/>
+    }
+    else{
       return (
         <div classNameName="main-profile" style={{ paddingBottom: "50px" }}>
           <div className="main-content">
@@ -182,6 +188,7 @@ class UserProfile extends React.Component {
           <footer></footer>
         </div>
       );
+                                }
     }
 
  }

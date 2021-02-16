@@ -87,7 +87,7 @@ export default class Register extends React.Component {
             </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
-              <input type="text" name="email" placeholder="email" value={this.state.email}
+              <input type="text" name="email" placeholder="email" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" value={this.state.email}
                 onChange={this.handleChange} required/>
             </div>
             <div className="form-group">
@@ -97,12 +97,12 @@ export default class Register extends React.Component {
             </div>
             <div className="form-group">
               <label htmlFor="phone">Phone number</label>
-              <input type="number" name="phonenumber" placeholder="Enter your number" value={this.state.phonenumber}
+              <input type="number" name="phonenumber" placeholder="Enter your number" maxLength="11" value={this.state.phonenumber}
                 onChange={this.handleChange} required/>
             </div>
             <div className="form-group">
               <label htmlFor="date">Birth date</label>
-              <input type="date" name="birthdate" placeholder="Enter your birth date" value={this.state.birthdate}
+              <input type="date" name="birthdate" placeholder="Enter your birth date" min="1970-01-01" max="2017-01-01"  value={this.state.birthdate}
                 onChange={this.handleChange} required/>
             </div>
             <div className="form-group">

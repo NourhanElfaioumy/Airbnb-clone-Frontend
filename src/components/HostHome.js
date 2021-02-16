@@ -1,6 +1,7 @@
 import React from "react";
 import "./HostHome.css";
 import { $ }  from 'react-jquery-plugin';
+import Error from "./404found";
 class HostHome extends React.Component {
   constructor(props) {
     super(props);
@@ -57,6 +58,9 @@ class HostHome extends React.Component {
     })
       .then((response) =>
         response.json().then(async (body) => {
+          if(body.message === "No token provided."){
+            this.props.history.push('/error404');
+          }
             this.props.history.push('/host/hostedhomes');
         })
       ).catch((err) => {
@@ -64,6 +68,11 @@ class HostHome extends React.Component {
       });
   }
   render() {
+    if(!localStorage.getItem("token") || JSON.parse(localStorage.getItem('user')).type !== true){
+      this.props.history.push('/error404')
+      return <Error/>
+    }
+    else{
     return (
       <div id="booking" className="section" style={{backgroundImage: `url('${process.env.PUBLIC_URL}/imgs/background.jpg')`,}}>
         <div className="section-center">
@@ -283,6 +292,7 @@ class HostHome extends React.Component {
         </div>
       </div>
     );
+    }
   }
   componentDidMount(){
     $('.form-control').each(function () {

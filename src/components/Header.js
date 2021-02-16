@@ -28,7 +28,8 @@ const Header = ({ dataFromParent,token,propss}) => {
             })
         })
   }
-  if (Cookies.get('token') && location.pathname.includes("/host")) {
+
+  if (Cookies.get('token') && JSON.parse(localStorage.getItem('user')).type === true && location.pathname.includes("/host")) {
     return (
       <div className="header">
         <Link to="/host">
@@ -69,7 +70,7 @@ const Header = ({ dataFromParent,token,propss}) => {
         </div>
       </div>
     );
-  } else if (Cookies.get('token') && location.pathname.includes("/user")) {
+  } else if (Cookies.get('token') && JSON.parse(localStorage.getItem('user')).type === false && location.pathname.includes("/user")) {
     return (
       <div className="header">
         <Link to="/user">
@@ -107,7 +108,9 @@ const Header = ({ dataFromParent,token,propss}) => {
         </div>
       </div>
     );
-  } else {
+  }else if(location.pathname.includes("/error404")){
+    return null
+  }else {
     return (
       <div className="header">
         <Link to="/">

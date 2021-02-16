@@ -1,4 +1,5 @@
 import React from "react";
+import Error from "./404found";
 import "./HostedHomes.css";
 class HostedHomes extends React.Component {
   constructor(props) {
@@ -7,13 +8,13 @@ class HostedHomes extends React.Component {
       data: "",
     };
   }
-  async deleteData(id) {
-    debugger;
-    await fetch(`https://tranquil-sands-93018.herokuapp.com/host/deleteHostedHome/${id}`, {
-      method: "DELETE",
-    }).then(console.log("ok"));
-  }
   render() {
+    debugger;
+    if(!localStorage.getItem("token") || JSON.parse(localStorage.getItem('user')).type === false){
+      this.props.history.push("/error404")
+      return <Error/>
+    }
+    else{
     if (this.state.data) {
       if (this.state.data.length > 0) {
         return (
@@ -34,7 +35,7 @@ class HostedHomes extends React.Component {
                     </div>
                     <div className="content">
                       <p>Guests : {item.no_Of_Guests}</p>
-                      <p>Price/Night : {item.averagePricePerNight}</p>
+                      <p>Price/Night : {item.averagePricePerNight} EGP</p>
                     </div>
                   </div>
                   <div className="justify-content-center d-block text-center">
@@ -58,7 +59,6 @@ class HostedHomes extends React.Component {
                             method: "DELETE",
                           }
                         ).then(() => {
-                          console.log("ok");
                           window.location.reload();
                         });
                       }}
@@ -77,6 +77,7 @@ class HostedHomes extends React.Component {
     } else {
       return <h1>No Hosted Houses Please add and check again</h1>;
     }
+  }
   }
   async componentDidMount() {
     await fetch("https://tranquil-sands-93018.herokuapp.com/host/hostedhomes", {

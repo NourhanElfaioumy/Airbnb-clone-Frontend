@@ -2,6 +2,7 @@ import React from "react";
 import "./hostProfile.css";
 import { withLastLocation } from 'react-router-last-location';
 import { Link } from "react-router-dom";
+import Error from "./404found";
 class HostProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -10,6 +11,11 @@ class HostProfile extends React.Component {
     };
   }
   render() {
+    if(!localStorage.getItem("token") || JSON.parse(localStorage.getItem('user')).type !== true){
+      this.props.history.push("/error404")
+      return <Error/>
+    }
+    else{
     if(this.props.lastLocation.pathname ==="/host/editProfile/"+this.props.datafromEdit._id){
       return (
         <div classNameName="main-profile" style={{ paddingBottom: "50px" }}>
@@ -336,7 +342,7 @@ class HostProfile extends React.Component {
         </div>
       );
     }
-
+  }
  }
 }
 

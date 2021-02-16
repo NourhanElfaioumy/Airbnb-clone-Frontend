@@ -2,8 +2,9 @@ import React ,{Component} from 'react';
 import './SearchPage.css';
 import { Button } from "@material-ui/core";
 import SearchResult from "./SearchResult";
+import Error from './404found';
 
-export default class SearchPage extends Component {
+export default class SearchPage extends React.Component {
     constructor(props){
         super(props);
         this.state={
@@ -11,9 +12,14 @@ export default class SearchPage extends Component {
         }
     }
 
-    render = () =>{
+    render(){
+        if(!localStorage.getItem("token") || JSON.parse(localStorage.getItem('user')).type !== false){
+            this.props.history.push('/error404');
+            return <Error/>
+        }
+        else{
           var date1 = new Date(this.props.search.fromDate); 
-var date2 = new Date(this.props.search.toDate); 
+          var date2 = new Date(this.props.search.toDate); 
         var Difference_In_Time = date2.getTime() - date1.getTime()
         var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
         var userID = localStorage.getItem("user")._id
@@ -39,6 +45,7 @@ var date2 = new Date(this.props.search.toDate);
 
         </div>
     )
+         }
 
 
 }

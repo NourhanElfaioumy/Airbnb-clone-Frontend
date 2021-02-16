@@ -1,8 +1,13 @@
 import React from "react";
+import Error from "./404found";
 //import {Link, useHistory} from "react-router-dom";
 class EditUserProfile extends React.Component {
     constructor(props) {
         super(props);
+        if(!this.props.location.userData && !localStorage.getItem("token")){
+          this.props.history.push("/error404")
+        }
+        else{
         this.state = {
             email:this.props.location.userData.email,
             firstname:this.props.location.userData.firstName,
@@ -12,6 +17,7 @@ class EditUserProfile extends React.Component {
         }
         this.handleEditProfile = this.handleEditProfile.bind(this);
         this.handleChange = this.handleChange.bind(this);
+      }
     }
     handleChange(evt) {
         this.setState({ [evt.target.name]: evt.target.value });
@@ -31,12 +37,22 @@ class EditUserProfile extends React.Component {
                 "Content-type": "application/json; charset=UTF-8",
               },
           }).then(response => response.json()).then(result => {
+            if(!localStorage.getItem('token')){
+              this.props.history.push('/error404');
+            }
+            else{
               this.props.history.push('/user/profile')
+            }
           }).catch(error => {
             console.error('Error:', error);
           });
     }
-    render() { 
+    render() {
+      if(!localStorage.getItem("token") || JSON.parse(localStorage.getItem('user')).type !== false){
+        this.props.history.push("/error404")
+        return <Error/>
+      }
+      else{
         return (      
         <div classNameName="main-profile" style={{ paddingBottom: "50px" }}>
         <div className="main-content">
@@ -126,7 +142,7 @@ class EditUserProfile extends React.Component {
         </div>
         <footer></footer>
       </div>);
-    }
+    }}
 }
  
 export default EditUserProfile;

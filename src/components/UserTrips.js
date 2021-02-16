@@ -1,6 +1,7 @@
 import React from "react";
 import "./HostedHomes.css";
-import * as moment from 'moment'
+import * as moment from 'moment';
+import UserTripsHome from "./UserTripsHome";
 class UserTrips extends React.Component {
   constructor(props) {
     super(props);
@@ -64,31 +65,32 @@ class UserTrips extends React.Component {
         return (
           <div className="row">
             {output.map((item) =>(
-                  <div className="col-sm-4 ">
-                  <div className="card">
-                    <div className="image">
-                      <img
-                        src={`${process.env.PUBLIC_URL}/imgs/background.jpg`}
-                        alt=""
-                      />
-                    </div>
-                    <div className="card-inner">
-                      <div className="header">
-                        <h2>{item.name[0].name}</h2>
-                      </div>
-                      <div className="header">
-                        <h3>{item.name[0].location}</h3>
-                      </div>
-                      <div className="content">
-                        <p>CheckIn : {item.link.checkIn}</p>
-                        <p>CheckOut : {item.link.checkOut}</p>
-                        <p>Guests : {item.link.no_Of_Guests}</p>
-                        <p>Cost : {item.link.cost}</p>
-                      </div>
-                    </div>
-                    <div className="justify-content-center d-block text-center"></div>
-                  </div>
-                </div>
+              <UserTripsHome img={`${process.env.PUBLIC_URL}/imgs/background.jpg`} name={item.name[0].name} location={item.name[0].location} checkIn={item.link.checkIn} checkOut={item.link.checkOut} guests={item.link.no_Of_Guests} cost={item.link.cost}/>
+                //   <div className="col-sm-4 ">
+                //   <div className="card">
+                //     <div className="image">
+                //       <img
+                //         src={`${process.env.PUBLIC_URL}/imgs/background.jpg`}
+                //         alt=""
+                //       />
+                //     </div>
+                //     <div className="card-inner">
+                //       <div className="header">
+                //         <h2>{item.name[0].name}</h2>
+                //       </div>
+                //       <div className="header">
+                //         <h3>{item.name[0].location}</h3>
+                //       </div>
+                //       <div className="content">
+                //         <p>CheckIn : {item.link.checkIn}</p>
+                //         <p>CheckOut : {item.link.checkOut}</p>
+                //         <p>Guests : {item.link.no_Of_Guests}</p>
+                //         <p>Cost : {item.link.cost}</p>
+                //       </div>
+                //     </div>
+                //     <div className="justify-content-center d-block text-center"></div>
+                //   </div>
+                // </div>
               ))}
           </div>
         );
