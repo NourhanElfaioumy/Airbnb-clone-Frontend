@@ -1,12 +1,10 @@
 import React from "react";
-import "./style.scss";
+import "../Auth/style.scss";
 import loginImg from "../../login.svg";
 import Cookie from "js-cookie";
-import Home from "../Home"
-export default class Login extends React.Component {
+class AdminLogin extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       email: "",
       password: "",
@@ -22,7 +20,7 @@ export default class Login extends React.Component {
     var password = this.state.password;
     ev.preventDefault();
     // const data = { email: email, password: password };
-    await fetch("https://tranquil-sands-93018.herokuapp.com/login", {
+    await fetch("https://tranquil-sands-93018.herokuapp.com/admin/login", {
       method: "POST",
       body: JSON.stringify({
         email: email,
@@ -46,32 +44,18 @@ export default class Login extends React.Component {
               .className.replace(/(?:^|\s)d-none(?!\S)/g, "d-block");
           } else {
             localStorage.setItem("token", body.token);
-            localStorage.setItem("user", JSON.stringify(body.userinfo));
+            localStorage.setItem("user", JSON.stringify(body.admininfo));
             Cookie.set("token", body.token);
             sessionStorage.setItem("token", body.token);
-            this.props.callbackFromParents(body.userinfo.type);
-            this.props.callbackFromParentsfortoken(body.token);
-            if (body.userinfo.type === false) {
-              this.props.history.push("/user");
-            } else {
-              this.props.history.push("/host");
-            }
+            window.location.reload()
+            this.props.history.push("/admin");
           }
         }
       });
     });
   }
   render() {
-    if(Cookie.get("token") && JSON.parse(localStorage.getItem("user")).type === false){
-      this.props.history.push("/user")
-      return <Home/>
-    }
-    else if(Cookie.get("token") && JSON.parse(localStorage.getItem("user")).type === true){
-      this.props.history.push("/host")
-      return <Home/>
-    }
-    else {
-      return (
+    return (
       <div className="base-container" ref={this.props.containerRef}>
         <div className="content">
           <div className="image">
@@ -112,6 +96,7 @@ export default class Login extends React.Component {
         </div>
       </div>
     );
-    }
   }
 }
+
+export default AdminLogin;

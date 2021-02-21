@@ -2,6 +2,7 @@ import React from "react";
 import loginImg from "../../login.svg";
 import "./style.scss";
 import Cookie from "js-cookie";
+import Home from "../Home";
 export default class Register extends React.Component {
   constructor(props) {
     super(props);
@@ -68,6 +69,15 @@ export default class Register extends React.Component {
     });
   }
   render() {
+    if(Cookie.get("token") && JSON.parse(localStorage.getItem("user")).type === false){
+      this.props.history.push("/user")
+      return <Home/>
+    }
+    else if(Cookie.get("token") && JSON.parse(localStorage.getItem("user")).type === true){
+      this.props.history.push("/host")
+      return <Home/>
+    }
+    else {
     return (
       <div className="base-container" ref={this.props.containerRef}>
         <div className="content">
@@ -128,5 +138,6 @@ export default class Register extends React.Component {
         </div>
       </div>
     );
+    }
   }
 }

@@ -44,7 +44,7 @@ class Home extends React.Component {
         }).catch(err=>console.log(err));
   }
   render() {
-    debugger;
+    
     if(!localStorage.getItem("token") && (window.location.pathname === '/user' || window.location.pathname === '/host')){
       this.props.history.push('/error404');
       return(<Error/>)
