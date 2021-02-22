@@ -49,7 +49,7 @@ class Home extends React.Component {
       this.props.history.push('/error404');
       return(<Error/>)
     }
-    else if((localStorage.getItem("user") && localStorage.getItem("user").type === true) || (!localStorage.getItem("token") && !localStorage.getItem("user"))){
+    else if((localStorage.getItem("user") && JSON.parse(localStorage.getItem('user')).type === true) || (!localStorage.getItem("token") && !localStorage.getItem("user"))){
       return (
         <div className="home">
         <div className="input-group row  justify-content-center pt-5" style={{backgroundImage: `url('${process.env.PUBLIC_URL}/imgs/background.jpg')`,backgroundSize: "100%",height: "300px",}}>

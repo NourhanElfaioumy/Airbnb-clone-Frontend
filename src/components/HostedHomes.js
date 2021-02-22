@@ -9,7 +9,6 @@ class HostedHomes extends React.Component {
     };
   }
   render() {
-    debugger;
     if(!localStorage.getItem("token") || JSON.parse(localStorage.getItem('user')).type === false){
       this.props.history.push("/error404")
       return <Error/>
@@ -24,9 +23,7 @@ class HostedHomes extends React.Component {
                 <div className="card">
                   <div className="image">
                     <img
-                      src={`${process.env.PUBLIC_URL}/imgs/background.jpg`}
-                      alt=""
-                    />
+                    src={`https://tranquil-sands-93018.herokuapp.com/${item.images[0].filename}`} alt="" style={{width:"431.66px",height:"242.8px"}}/>
                   </div>
                   <div className="card-inner">
                     <div className="header">

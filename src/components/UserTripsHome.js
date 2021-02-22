@@ -9,8 +9,9 @@ function UserTripsHome({img,name,location,guests,checkIn,checkOut,cost}){
             <div className="card">
               <div className="image">
                 <img
-                  src={`${process.env.PUBLIC_URL}/imgs/background.jpg`}
+                  src={img}
                   alt=""
+                  style={{height:"242.8px"}}
                 />
               </div>
               <div className="card-inner">

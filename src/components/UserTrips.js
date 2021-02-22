@@ -65,7 +65,7 @@ class UserTrips extends React.Component {
         return (
           <div className="row">
             {output.map((item) =>(
-              <UserTripsHome img={`${process.env.PUBLIC_URL}/imgs/background.jpg`} name={item.name[0].name} location={item.name[0].location} checkIn={item.link.checkIn} checkOut={item.link.checkOut} guests={item.link.no_Of_Guests} cost={item.link.cost}/>
+              <UserTripsHome img={`https://tranquil-sands-93018.herokuapp.com/${item.name[0].images[0].filename}`} name={item.name[0].name} location={item.name[0].location} checkIn={item.link.checkIn} checkOut={item.link.checkOut} guests={item.link.no_Of_Guests} cost={item.link.cost}/>
                 //   <div className="col-sm-4 ">
                 //   <div className="card">
                 //     <div className="image">

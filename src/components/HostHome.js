@@ -18,9 +18,11 @@ class HostHome extends React.Component {
       pool: false,
       gym: false,
       bfront: false,
+      images:''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleHostHome = this.handleHostHome.bind(this);
+    this.onFileChange= this.onFileChange.bind(this)
   }
   handleChange(evt) {
     if (
@@ -33,26 +35,49 @@ class HostHome extends React.Component {
       this.setState({ [evt.target.name]: evt.target.value });
     }
   }
+  onFileChange(e) {
+    this.setState({ images: e.target.files })
+  }
   async handleHostHome(e) {
     e.preventDefault();
-    await fetch("https://tranquil-sands-93018.herokuapp.com/host/hosthome", {
+    const data = new FormData();
+    for (const key of Object.keys(this.state.images)) {
+      data.append('images', this.state.images[key])
+    }
+   // data.append('images', this.state.images);
+    data.append('name', this.state.name);
+    data.append('address', this.state.address);
+    data.append('location', this.state.location);
+    data.append('type', this.state.type);
+    data.append('no_Of_Guests', this.state.guests);
+    data.append('averagePricePerNight', this.state.price);
+    data.append('no_Of_Bedrooms', this.state.bedrooms);
+    data.append('no_Of_Bathrooms', this.state.bathrooms);
+    data.append('propertyType', this.state.proptype);
+    data.append('pool', this.state.pool);
+    data.append('Gym', this.state.gym);
+    data.append('BeachFront', this.state.bfront);
+    await fetch("https://tranquil-sands-93018.herokuapp.com/host/hostHome", {
       method: "POST",
-      body: JSON.stringify({
-        address: this.state.address,
-        location: this.state.location,
-        name: this.state.name,
-        type: this.state.type,
-        no_Of_Guests: this.state.guests,
-        averagePricePerNight: this.state.price,
-        no_Of_Bedrooms: this.state.bedrooms,
-        no_Of_Bathrooms: this.state.bathrooms,
-        propertyType: this.state.proptype,
-        pool: this.state.pool,
-        Gym: this.state.gym,
-        BeachFront: this.state.bfront,
-      }),
+      body: data,
+      // JSON.stringify({
+      //   address: this.state.address,
+      //   location: this.state.location,
+      //   name: this.state.name,
+      //   type: this.state.type,
+      //   no_Of_Guests: this.state.guests,
+      //   averagePricePerNight: this.state.price,
+      //   no_Of_Bedrooms: this.state.bedrooms,
+      //   no_Of_Bathrooms: this.state.bathrooms,
+      //   propertyType: this.state.proptype,
+      //   pool: this.state.pool,
+      //   Gym: this.state.gym,
+      //   BeachFront: this.state.bfront,
+      //   images:this.state.images
+      // }),
       headers: {
-        "Content-type": "application/json; charset=UTF-8",
+        // "Content-type": "application/json; charset=UTF-8",
+        'Accept': 'application/json',
         "x-access-token": localStorage.getItem("token"),
       },
     })
@@ -68,6 +93,7 @@ class HostHome extends React.Component {
       });
   }
   render() {
+    console.log(this.state.images)
     if(!localStorage.getItem("token") || JSON.parse(localStorage.getItem('user')).type !== true){
       this.props.history.push('/error404')
       return <Error/>
@@ -85,7 +111,7 @@ class HostHome extends React.Component {
               </div>
               <div className="col-md-6 col-md-offset-1">
                 <div className="booking-form">
-                  <form>
+                  <form encType="multipart/form-data" method="POST">
                     <div className="row">
                       <div className="col-md-12">
                         <div className="form-group">
@@ -235,6 +261,14 @@ class HostHome extends React.Component {
                             </option>
                             <option value="Unique space">Unique space</option>
                           </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="form-group">
+                          <input type="file" name="images" className="form-control" onChange={this.onFileChange} multiple/>
+                          <span className="form-label">Images</span>
                         </div>
                       </div>
                     </div>

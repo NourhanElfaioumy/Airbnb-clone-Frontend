@@ -40,7 +40,7 @@ export default class SearchPage extends React.Component {
             {this.props.data.map((item)=>{
                 if(item.reservedhomes.length>0){
                 return(
-                <SearchResult img="https://www.smartertravel.com/uploads/2017/07/Untitled-design-8.jpg" location={item.location} title={item.name} description={item.no_Of_Guests +" guest . "+item.no_Of_Bedrooms+" bedroom . "+item.no_Of_Bathrooms+" bathrooms . "+item.propertyType+" Home"} star={3.8} price={`${item.averagePricePerNight}EGP/ night`} total={(item.averagePricePerNight)*Difference_In_Days} userID={userID} hostID={item.HostID} guests={this.props.search.guests} fromDate={this.props.search.fromDate} toDate={this.props.search.toDate} hostedHomeID={item._id}/>
+                <SearchResult imgs={item.images} location={item.location} title={item.name} description={item.no_Of_Guests +" guest . "+item.no_Of_Bedrooms+" bedroom . "+item.no_Of_Bathrooms+" bathrooms . "+item.propertyType+" Home"} star={3.8} price={`${item.averagePricePerNight}EGP/ night`} total={(item.averagePricePerNight)*Difference_In_Days} userID={userID} hostID={item.HostID} guests={this.props.search.guests} fromDate={this.props.search.fromDate} toDate={this.props.search.toDate} hostedHomeID={item._id}/>
             )}})}
 
         </div>

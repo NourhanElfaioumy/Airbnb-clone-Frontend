@@ -5,8 +5,15 @@ import {useHistory} from 'react-router-dom'
 import StarIcon from "@material-ui/icons/Star";
 import { Modal, Button } from "react-bootstrap";
 
-function SearchResult({ img, location, title, description, star, price,total,guests,userID,hostID,hostedHomeID,fromDate,toDate}) {
+function SearchResult({ imgs, location, title, description, star, price,total,guests,userID,hostID,hostedHomeID,fromDate,toDate}) {
   const [showModal, setShow] = useState(false);
+  const [imgSRC,showImg]= useState(`https://tranquil-sands-93018.herokuapp.com/${imgs[0].filename}`);
+  let x =0;
+  const myInterval=0;
+  const srcs=[]
+  imgs.forEach(i => {
+    srcs.push(i.filename)
+  });
   const history = useHistory();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -31,10 +38,25 @@ function SearchResult({ img, location, title, description, star, price,total,gue
     
 
   }
+  console.log(srcs)
   return (
     <>
       <div className="searchResult">
-        <img src={img} alt="" />
+      <div className="slideshow-container">
+
+<div className="mySlides">
+  <img src={imgSRC} alt='' className="img"/>
+</div>
+<a className="prev" onClick={()=>{if(x>0){showImg(`https://tranquil-sands-93018.herokuapp.com/${srcs[--x]}`)}}}>&#10094;</a>
+<a className="next" onClick={()=>{if(x<srcs.length-1 && x!==srcs.length-1){showImg(`https://tranquil-sands-93018.herokuapp.com/${srcs[++x]}`)}else{showImg(`https://tranquil-sands-93018.herokuapp.com/${srcs[--x]}`)}}}>&#10095;</a>
+
+</div>
+      {/* <div >
+                <a onClick={()=>{if(x>0){showImg(`http://localhost:9000/${srcs[--x]}`)}}} className="mt-5 pt-5" s>&#10094;</a>
+                <img className='img' src={imgSRC} alt=''/>
+                <a onClick={()=>{if(x<srcs.length-1){showImg(`http://localhost:9000/${srcs[++x]}`)}}} className="mt-5 pt-5">&#10095;</a>
+       </div> */}
+        {/* <img src={`http://localhost:9000/${imgs[0].filename}`} alt="" /> */}
         <FavoriteBorderIcon className="searchResult__heart" />
 
         <div className="searchResult__info">
@@ -58,7 +80,7 @@ function SearchResult({ img, location, title, description, star, price,total,gue
               <h2>{price}</h2>
             </div>
           </div>
-          <div>
+          <div style={{width:"700px"}} className="justify-content-center">
             <button className="btn btn-secondary w-100" onClick={handleShow}>
               Book
             </button>
